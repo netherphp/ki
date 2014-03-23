@@ -68,8 +68,22 @@ class Ki {
 	////////////////
 
 	static function Log($key,$ki,$argv) {
-		if($ki) self::$Log[] = "{$key} {$ki->Alias}";
-		else self::$Log[] = "{$key}";
+		if(!Nether\Option::Get('nether-ki-log'))
+		return;
+
+		if($ki) {
+			$types = [];
+			foreach($argv as $arg) $type[] = gettype($arg);
+
+			self::$Log[] = sprintf(
+				'%s %s(%s)',
+				$key,
+				$ki->Alias,
+				((count($types))?(join(',',$types)):('void'))
+			);
+		} else {
+			self::$Log[] = "{$key}";
+		}
 	}
 
 	////////////////
@@ -82,6 +96,8 @@ class Ki {
 	flow all the ki events for the specified Key. returns a count of how
 	many events were executed.
 	//*/
+
+		self::Log($key,null,null);
 
 		if(!array_key_exists($key,self::$Queue)) return 0;
 
@@ -98,6 +114,7 @@ class Ki {
 			// times. this can be fixed but not right now. or maybe should
 			// not be anyway.
 
+			self::Log($key,$ki,$argv);
 			$ki->Exec($argv);
 
 			if(!$ki->Persist)
