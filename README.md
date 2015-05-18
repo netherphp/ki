@@ -1,6 +1,8 @@
 Nether Ki
 ==============
 
+[![nether.io](https://img.shields.io/badge/nether-ki-C661D2.svg)](http://nether.io/) [![Code Climate](https://codeclimate.com/github/netherphp/ki/badges/gpa.svg)](https://codeclimate.com/github/netherphp/ki) [![Build Status](https://travis-ci.org/netherphp/ki.svg)](https://travis-ci.org/netherphp/ki)  [![Packagist](https://img.shields.io/packagist/v/netherphp/ki.svg)](https://packagist.org/packages/netherphp/ki) [![Packagist](https://img.shields.io/packagist/dt/netherphp/ki.svg)](https://packagist.org/packages/netherphp/ki)
+
 #### Basic Use
 
 An event system handler. Queue callbacks to be executed when needed by other parts of the application. Can be used to trigger actions or filter things. Events are one time use by default, but you can also have them persist for multiple uses. This is not a true async thing like React - these filters will block, so they are safe for inline filtering.
