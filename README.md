@@ -3,7 +3,7 @@ Nether Ki
 
 #### Basic Use
 
-An event system handler. Queue callbacks to be executed when needed by other parts of the application. Can be used to trigger actions or filter things. Events are one time use by default, but you can also have them persist for multiple uses.
+An event system handler. Queue callbacks to be executed when needed by other parts of the application. Can be used to trigger actions or filter things. Events are one time use by default, but you can also have them persist for multiple uses. This is not a true async thing like React - these filters will block, so they are safe for inline filtering.
 
 	Nether\Ki::Queue(string EventName, callable Callback, bool Persist default false);
 	
