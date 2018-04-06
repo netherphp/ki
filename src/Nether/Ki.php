@@ -89,41 +89,49 @@ class Ki {
 	////////////////
 	////////////////
 
-	static function Flow($key,$argv=null) {
+	static function
+	Flow($Key, $Argv=NULL, $Persist=FALSE) {
 	/*//
-	@argv string Key, array Argv
+	@update 2018-04-06
+	@argv string Key, array Argv, Bool Persist default FALSE
 	@return int
 	flow all the ki events for the specified Key. returns a count of how
-	many events were executed.
+	many events were executed. if persist is true the we will not delete any
+	ki which has been marked for removal after one use.
 	//*/
 
-		self::Log($key,null,null);
+		$Count = 0;
+		$Iter = 0;
+		$Ki = NULL;
 
-		if(!array_key_exists($key,self::$Queue)) return 0;
+		////////
 
-		if(!is_array($argv) && !is_object($argv))
-		$argv = array($argv);
+		self::Log($Key,NULL,NULL);
 
-		$count = 0;
-		foreach(self::$Queue[$key] as $iter => $ki) {
+		if(!array_key_exists($Key,self::$Queue))
+		return 0;
 
-			// array_unshift($argv,$key);
-			// this was causing problems in events which have referenced
-			// callbacks like the scope generators, when more than one
-			// item was queued the event name would be appended that many
-			// times. this can be fixed but not right now. or maybe should
-			// not be anyway.
+		if(!is_array($Argv) && !is_object($Argv))
+		$Argv = array($Argv);
 
-			self::Log($key,$ki,$argv);
-			$ki->Exec($argv);
+		////////
 
-			if(!$ki->Persist)
-			unset(self::$Queue[$key][$iter]);
+		$Count = 0;
 
-			++$count;
+		foreach(self::$Queue[$Key] as $Iter => $Ki) {
+			self::Log($Key,$Ki,$Argv);
+
+			$Ki->Exec($Argv);
+
+			if(!$Persist && !$Ki->Persist)
+			unset(self::$Queue[$Key][$Iter]);
+
+			++$Count;
 		}
 
-		return $count;
+		////////
+
+		return $Count;
 	}
 
 	static function Queue($key,$call,$persist=false) {
