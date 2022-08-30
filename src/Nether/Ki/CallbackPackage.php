@@ -5,16 +5,19 @@ namespace Nether\Ki;
 trait CallbackPackage {
 
 	protected array
-	$KiEvents = [];
+	$KiQueue = [];
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
 
 	public function
 	Queue(string $Key, callable $Func, bool $Persist=FALSE):
 	static {
 
-		if(!array_key_exists($Key, $this->KiEvents))
-		$this->KiEvents[$Key] = array();
+		if(!array_key_exists($Key, $this->KiQueue))
+		$this->KiQueue[$Key] = [];
 
-		$this->KiEvents[$Key][] = new Event($Func, $Persist);
+		$this->KiQueue[$Key][] = new Event($Func, $Persist);
 
 		return $this;
 	}
@@ -29,7 +32,7 @@ trait CallbackPackage {
 
 		////////
 
-		if(!array_key_exists($Key, $this->KiEvents))
+		if(!array_key_exists($Key, $this->KiQueue))
 		return $Count;
 
 		if(!is_array($Argv))
@@ -37,17 +40,50 @@ trait CallbackPackage {
 
 		////////
 
-		foreach($this->KiEvents[$Key] as $Iter => $Event) {
+		foreach($this->KiQueue[$Key] as $Iter => $Event) {
 			/** @var Event $Event */
 
 			$Event->Exec($Argv);
 			$Count++;
 
 			if(!$Persist && !$Event->Persist)
-			unset(self::$Callbacks[$Key][$Iter]);
+			unset($this->KiQueue[$Key][$Iter]);
 		}
 
 		return $Count;
+	}
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	public function
+	QueueCount(string $Key):
+	int {
+
+		if(isset($this->KiQueue[$Key]))
+		return count($this->KiQueue[$Key]);
+
+		return 0;
+	}
+
+	public function
+	QueueGet(string $Key):
+	array {
+
+		if(isset($this->KiQueue[$Key]))
+		return $this->KiQueue[$Key];
+
+		return [];
+	}
+
+	public function
+	QueueClear(string $Key):
+	static {
+
+		if(isset($this->KiQueue[$Key]))
+		unset($this->KiQueue[$Key]);
+
+		return $this;
 	}
 
 }

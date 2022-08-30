@@ -22,8 +22,7 @@
 			<directory suffix=".php">src</directory>
 		</include>
 		<exclude>
-			<directory>src/Nether/Ki</directory>
-			<directory>src/Nether/Object</directory>
+
 		</exclude>
 	</coverage>
 </phpunit>
