@@ -1,12 +1,12 @@
 {
 	"name": "netherphp/ki",
-	"description": "An event handler",
+	"description": "An event queue handler.",
 	"keywords": [ "php", "event" ],
 	"license": "BSD-2-Clause",
 	"authors": [
 		{
 			"name": "Bob Majdak Jr",
-			"email": "bob@pegasusgate.net",
+			"email": "bmajdak@php.net",
 			"homepage": "http://pegasusgate.net/+bob",
 			"role": "developer"
 		}

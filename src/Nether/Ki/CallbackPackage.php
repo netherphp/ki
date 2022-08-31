@@ -11,7 +11,7 @@ trait CallbackPackage {
 	////////////////////////////////////////////////////////////////
 
 	public function
-	Queue(string $Key, callable $Func, bool $Persist=FALSE):
+	Queue(string $Key, callable $Func, bool $Persist=TRUE):
 	static {
 
 		if(!array_key_exists($Key, $this->KiQueue))
@@ -23,7 +23,7 @@ trait CallbackPackage {
 	}
 
 	public function
-	Flow(string $Key, array $Argv=[], bool $Persist=FALSE):
+	Flow(string $Key, array|object $Argv=[], bool $Persist=TRUE):
 	int {
 
 		$Count = 0;
@@ -46,7 +46,7 @@ trait CallbackPackage {
 			$Event->Exec($Argv);
 			$Count++;
 
-			if(!$Persist && !$Event->Persist)
+			if(!$Persist || !$Event->Persist)
 			unset($this->KiQueue[$Key][$Iter]);
 		}
 
