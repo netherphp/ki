@@ -67,8 +67,8 @@ extends PHPUnit\Framework\TestCase {
 	void {
 
 		$Test = new Test1;
-		$Func1 = (fn(array $Arg)=> print(count($Arg)));
-		$Func2 = (fn(array $Arg)=> print($Arg['Key']));
+		$Func1 = (fn(...$Arg)=> print(count($Arg)));
+		$Func2 = (fn(...$Arg)=> print($Arg['Key']));
 		$DataArr = [ 'Key'=> 'Value' ];
 		$DataObj = new class { public string $Key='Value'; };
 		$Count = NULL;
@@ -125,7 +125,7 @@ extends PHPUnit\Framework\TestCase {
 	void {
 
 		$Test = new Test1;
-		$Func1 = (fn(array $Arg)=> print(count($Arg)));
+		$Func1 = (fn(...$Arg)=> print(count($Arg)));
 		$Count1 = NULL;
 		$Count2 = NULL;
 

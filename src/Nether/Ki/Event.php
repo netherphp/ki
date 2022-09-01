@@ -23,7 +23,7 @@ class Event {
 	Exec(array $Argv):
 	mixed {
 
-		return ($this->Func)($Argv);
+		return ($this->Func)(...$Argv);
 	}
 
 }
