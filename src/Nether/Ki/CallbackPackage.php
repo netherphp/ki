@@ -43,11 +43,11 @@ trait CallbackPackage {
 		foreach($this->KiQueue[$Key] as $Iter => $Event) {
 			/** @var Event $Event */
 
-			$Event->Exec($Argv);
-			$Count++;
-
 			if(!$Persist || !$Event->Persist)
 			unset($this->KiQueue[$Key][$Iter]);
+
+			$Event->Exec($Argv);
+			$Count++;
 		}
 
 		return $Count;
