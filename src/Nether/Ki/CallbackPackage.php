@@ -23,6 +23,13 @@ trait CallbackPackage {
 	}
 
 	public function
+	QueueOnce(string $Key, callable $Func):
+	static {
+
+		return $this->Queue($Key, $Func, FALSE);
+	}
+
+	public function
 	Flow(string $Key, array|object $Argv=[], bool $Persist=TRUE):
 	int {
 
